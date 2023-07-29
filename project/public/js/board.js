@@ -31,14 +31,18 @@ function likeUpDown() {
         return data.json();
     })
     .then(apiData  => {
-        let likeUpDown = document.querySelector('.likeUpDown');
-        if (apiData["errorcode"] === "0") {
-            likeUpDown.id = 'greenBtn';
-        } else if (apiData["errorcode"] === "1") {
-            likeUpDown.removeAttribute( 'id' );
+        if(apiData["errorcode"] === "0") {
+            let likeUpDown = document.querySelector('.likeUpDown');
+            if (apiData["msg"] === "좋아요 증가") {
+                likeUpDown.id = 'greenBtn';
+            } else {
+                likeUpDown.removeAttribute( 'id' );
+            }
+            let likes = document.getElementById('likes');
+            likes.innerHTML = apiData['data']['likes'];
+        } else {
+            alert(apiData['msg']);
         }
-        let likes = document.getElementById('likes');
-        likes.innerHTML = apiData['data']['likes'];
     });
 }
 
