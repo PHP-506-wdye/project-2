@@ -144,7 +144,7 @@ class ApiController extends Controller
                 ->join('food_infos', 'food_carts.food_id', 'food_infos.food_id')
                 ->where('food_carts.user_id', $req->value1)
                 ->where('food_carts.d_flg', $req->value4)
-                ->whereDate('food_carts.created_at', $req->value5)
+                ->where('food_carts.d_date', $req->value5)
                 ->where('food_infos.food_id', $req->value2)
                 ->get();
 
@@ -153,7 +153,7 @@ class ApiController extends Controller
                 ->join('food_carts', 'food_carts.fav_id', 'fav_diet_food.fav_id')
                 ->where('fav_diets.user_id', $req->value1)
                 ->where('food_carts.d_flg', $req->value4)
-                ->whereDate('food_carts.created_at', $req->value5)
+                ->where('food_carts.d_date', $req->value5)
                 ->where('fav_diet_food.food_id', $req->value2)
                 ->get();
 
@@ -170,7 +170,8 @@ class ApiController extends Controller
                     'user_id' => $req->value1,
                     'food_id' => $req->value2,
                     'amount'  => $req->value3,
-                    'd_flg'   => $req->value4
+                    'd_flg'   => $req->value4,
+                    'd_date'  => $req->value5
                 ]);
                 $cart->save();
 
@@ -206,7 +207,7 @@ class ApiController extends Controller
         $countDuplicateFood = FavDietFood::join('fav_diets', 'fav_diet_food.fav_id', 'fav_diets.fav_id')
             ->join('food_carts', 'food_carts.food_id', 'fav_diet_food.food_id')
             ->where('food_carts.d_flg', $req->flg)
-            ->whereDate('food_carts.created_at', $req->date)
+            ->where('food_carts.d_date', $req->date)
             ->where('fav_diets.user_id', $req->userId)
             ->where('fav_diet_food.fav_id', $req->favId)
             ->get();
@@ -236,7 +237,7 @@ class ApiController extends Controller
             ->join('fav_diets', 'fav_diets.fav_id', 'food_carts.fav_id')
             ->where('food_carts.user_id', $req->userId)
             ->where('food_carts.d_flg', $req->flg)
-            ->whereDate('food_carts.created_at', $req->date)
+            ->where('food_carts.d_date', $req->date)
             ->get();
 
             $arr['data'] = $seleted_diet;
@@ -261,7 +262,7 @@ class ApiController extends Controller
                 ->join('food_infos', 'food_carts.food_id', 'food_infos.food_id')
                 ->where('food_carts.user_id', $req->userId)
                 ->where('food_carts.d_flg', $req->flg)
-                ->whereDate('food_carts.created_at', $req->date)
+                ->where('food_carts.d_date', $req->date)
                 ->get();
 
             $arr['data'] = $seleted;

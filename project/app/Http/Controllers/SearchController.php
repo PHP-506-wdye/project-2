@@ -54,7 +54,7 @@ class SearchController extends Controller
         ->join('food_infos', 'food_carts.food_id', 'food_infos.food_id')
         ->where('food_carts.user_id', $id)
         ->where('food_carts.d_flg', $req->time)
-        ->whereDate('food_carts.created_at', $req->date)
+        ->where('food_carts.d_date', $req->date)
         ->get();
 
         // * 선택된 식단
@@ -63,7 +63,7 @@ class SearchController extends Controller
         ->join('fav_diets', 'fav_diets.fav_id', '=', 'food_carts.fav_id')
         ->where('food_carts.user_id', $id)
         ->where('food_carts.d_flg', $req->time)
-        ->whereDate('food_carts.created_at', $req->date)
+        ->where('food_carts.d_date', $req->date)
         ->get();
 
         $data = [
@@ -84,7 +84,7 @@ class SearchController extends Controller
             ->leftJoin('food_carts', function($join) use($req, $id){
                 $join->on('food_infos.food_id', 'food_carts.food_id')
                 ->where('food_carts.d_flg', $req->time)
-                ->whereDate('food_carts.created_at', $req->date)
+                ->where('food_carts.d_date', $req->date)
                 ->where('food_carts.user_id', $id);
             })
             ->whereNull('food_carts.food_id')
@@ -150,9 +150,6 @@ class SearchController extends Controller
         ->where('d_flg', $time)
         ->where('d_date', $date)
         ->first();
-
-        DB::table('food_carts')->where('created_at', '>', 'now()')->delete();
-
         
         if (!isset($selectDiet)) {  // 입력된 식단 정보가 없을 때
             // 새 식단 정보 입력
@@ -172,13 +169,17 @@ class SearchController extends Controller
         
         if( $foodCount + $foodCart->count() + $favCart->count() > 10 ) {
             // 장바구니 삭제 후 홈으로 리턴
-            DB::table('food_carts')->where('user_id', $id)->delete();
+            DB::table('food_carts')
+                ->where('user_id', $id)
+                ->where('d_date', $date)
+                ->where('d_flg', $time)
+                ->delete();
 
             Alert::error('10개 초과로 입력할 수 없습니다.', '');
             return redirect()->route('home');
         }
 
-        DB::transaction(function () use ($foodCart, $insertDietId, $favCart) {
+        DB::transaction(function () use ($foodCart, $insertDietId, $favCart, $id, $date, $time) {
             // 검색 음식 입력
             if (!$foodCart->isEmpty()) {
                 for ($i=0; $i < $foodCart->count(); $i++) { 
@@ -200,11 +201,15 @@ class SearchController extends Controller
                     ]);
                 }
             }
+
+            // 음식 장바구니 삭제
+            DB::table('food_carts')
+                ->where('user_id', $id)
+                ->where('d_date', $date)
+                ->where('d_flg', $time)
+                ->delete();
         });
         
-        // 음식 장바구니 삭제
-        DB::table('food_carts')->where('user_id', $id)->delete();
-
         return redirect()->route('home');
 
         // * v002 delete : 더이상 쓰지 않는 부분 삭제
@@ -368,7 +373,7 @@ class SearchController extends Controller
         DB::table('food_carts')
             ->where('user_id', $id)
             ->where('food_carts.d_flg', $time)
-            ->whereDate('food_carts.created_at', $date)
+            ->where('food_carts.d_date', $date)
             ->delete();
         return redirect()->route('home');
     }
