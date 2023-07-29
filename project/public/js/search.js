@@ -253,7 +253,7 @@ function getDietValue(event, userId, favId)  {
                 // 선택된 음식
                 let selectedFood = document.getElementById('selectedFood');
                 selectedFood.innerHTML = 'new';
-            } else if (data['errorcode'] === '1') {
+            } else {
                 alert(data['msg']);
                 event.target.checked = false;
             }

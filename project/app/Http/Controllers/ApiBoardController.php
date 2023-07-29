@@ -23,55 +23,61 @@ class ApiBoardController extends Controller
             ,'msg'      => ''
         ];
 
-        // 해당 유저의 해당 글 좋아요 확인
-        $like_count = DB::table('board_likes')
-            ->where('user_id', $req->id1)
-            ->where('board_id', $req->id2)
-            ->first();
-        
-        $like_flg = 0;  // 좋아요가 없을 때
-        if (isset($like_count)) { 
-            $like_flg = 1;  // 좋아요가 있을 때
-        }
-
-        if ($like_flg === 0) {
-            DB::transaction(function () use ($req) {
-                // 좋아요 테이블 인서트
-                DB::table('board_likes')->insert([
-                    'board_id'    => $req->id2
-                    ,'user_id'    => $req->id1
-                ]);
-    
-                // 게시판 테이블 좋아요 수 증가
-                DB::table('boards')
-                ->where('board_id', '=', $req->id2)
-                ->increment('likes');
-            });
+        DB::beginTransaction();
+        try {
+            // 해당 유저의 해당 글 좋아요 확인
+            $like_count = DB::table('board_likes')
+                ->where('user_id', $req->id1)
+                ->where('board_id', $req->id2)
+                ->first();
             
-            $arr['errorcode'] = '0';
-            $arr['msg'] = '좋아요 증가';
-        } else {
-            DB::transaction(function () use ($req) {
-                // 좋아요 테이블 정보 삭제
-                DB::table('board_likes')
-                    ->where('user_id', $req->id1)
-                    ->where('board_id', $req->id2)
-                    ->delete();
-    
-                // 게시판 테이블 좋아요 수 감소
-                DB::table('boards')
-                ->where('board_id', '=', $req->id2)
-                ->decrement('likes');
-            });
+            $like_flg = 0;  // 좋아요가 없을 때
+            if (isset($like_count)) { 
+                $like_flg = 1;  // 좋아요가 있을 때
+            }
 
+            if ($like_flg === 0) {
+                DB::transaction(function () use ($req) {
+                    // 좋아요 테이블 인서트
+                    DB::table('board_likes')->insert([
+                        'board_id'    => $req->id2
+                        ,'user_id'    => $req->id1
+                    ]);
+        
+                    // 게시판 테이블 좋아요 수 증가
+                    DB::table('boards')
+                    ->where('board_id', '=', $req->id2)
+                    ->increment('likes');
+                });
+                
+                $arr['msg'] = '좋아요 증가';
+            } else {
+                DB::transaction(function () use ($req) {
+                    // 좋아요 테이블 정보 삭제
+                    DB::table('board_likes')
+                        ->where('user_id', $req->id1)
+                        ->where('board_id', $req->id2)
+                        ->delete();
+        
+                    // 게시판 테이블 좋아요 수 감소
+                    DB::table('boards')
+                    ->where('board_id', '=', $req->id2)
+                    ->decrement('likes');
+                });
+
+                $arr['msg'] = '좋아요 감소';
+            }
+
+            $board = Board::find($req->id2);
+            $arr['data']['likes'] = $board->likes; 
+        
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
             $arr['errorcode'] = '1';
-            $arr['msg'] = '좋아요 감소';
+            $arr['msg'] = '오류가 발생하였습니다.';
         }
-
-        $board = Board::find($req->id2);
-        $arr['data']['likes'] = $board->likes; 
-
-        return $arr;
+            return $arr;
     }
 
     // v002 add : 선택한 식단에 포함된 음식 조회 후 출력

@@ -185,13 +185,11 @@ class ApiController extends Controller
                 $arr['data'] = $seleted;
             }
 
-            // 모든 작업이 성공적으로 완료되면 커밋
             DB::commit();
         } catch (\Exception $e) {
-            // 예외 발생 시 롤백
             DB::rollBack();
             $arr['errorcode'] = '2';
-            $arr['msg'] = '오류가 발생하여 장바구니에 음식을 추가하지 못했습니다. ' . $e->getMessage();
+            $arr['msg'] = '오류가 발생하여 음식을 추가하지 못했습니다. ';
         }
 
         return $arr;
@@ -203,44 +201,55 @@ class ApiController extends Controller
             ,'msg' => '장바구니 입력 성공'
         ];
 
-        // 식단 음식 정보 + 장바구니 음식 아이디 조인 셀렉트
-        $countDuplicateFood = FavDietFood::join('fav_diets', 'fav_diet_food.fav_id', 'fav_diets.fav_id')
-            ->join('food_carts', 'food_carts.food_id', 'fav_diet_food.food_id')
-            ->where('food_carts.d_flg', $req->flg)
-            ->where('food_carts.d_date', $req->date)
-            ->where('fav_diets.user_id', $req->userId)
-            ->where('fav_diet_food.fav_id', $req->favId)
-            ->get();
+        DB::beginTransaction();
+        try {
 
-        // 결과가 있으면 에러코드 작성
-        $flg = 0;
-        if ($countDuplicateFood->count() > 0) {
-            $arr['errorcode'] = '1';
-            $arr['msg'] = '해당음식이 이미 선택된 음식에 존재합니다.';
-            $flg = 1;
-        }
+            // 식단 음식 정보 + 장바구니 음식 아이디 조인 셀렉트
+            $countDuplicateFood = FavDietFood::join('fav_diets', 'fav_diet_food.fav_id', 'fav_diets.fav_id')
+                ->join('food_carts', 'food_carts.food_id', 'fav_diet_food.food_id')
+                ->where('food_carts.d_flg', $req->flg)
+                ->where('food_carts.d_date', $req->date)
+                ->where('fav_diets.user_id', $req->userId)
+                ->where('fav_diet_food.fav_id', $req->favId)
+                ->get();
 
-        // 결과가 없으면 인서트
-        if($flg === 0) {
-            $cart = new FoodCart([
-                'user_id' => $req->userId,
-                'fav_id' => $req->favId,
-                'food_id' => 0,
-                'amount' => 0.0,
-                'd_flg'  => $req->flg
-            ]);
-            $cart->save();
+            // 결과가 있으면 에러코드 작성
+            $flg = 0;
+            if ($countDuplicateFood->count() > 0) {
+                $arr['errorcode'] = '1';
+                $arr['msg'] = '해당음식이 이미 선택된 음식에 존재합니다.';
+                $flg = 1;
+            }
 
-            // 장바구니 정보 획득
-            $seleted_diet = DB::table('food_carts')
-            ->select('food_carts.cart_id', 'food_carts.user_id', 'food_carts.fav_id', 'fav_diets.fav_name')
-            ->join('fav_diets', 'fav_diets.fav_id', 'food_carts.fav_id')
-            ->where('food_carts.user_id', $req->userId)
-            ->where('food_carts.d_flg', $req->flg)
-            ->where('food_carts.d_date', $req->date)
-            ->get();
+            // 결과가 없으면 인서트
+            if($flg === 0) {
+                $cart = new FoodCart([
+                    'user_id'   => $req->userId,
+                    'fav_id'    => $req->favId,
+                    'food_id'   => 0,
+                    'amount'    => 0.0,
+                    'd_flg'     => $req->flg,
+                    'd_date'    => $req->date
+                ]);
+                $cart->save();
 
-            $arr['data'] = $seleted_diet;
+                // 장바구니 정보 획득
+                $seleted_diet = DB::table('food_carts')
+                ->select('food_carts.cart_id', 'food_carts.user_id', 'food_carts.fav_id', 'fav_diets.fav_name')
+                ->join('fav_diets', 'fav_diets.fav_id', 'food_carts.fav_id')
+                ->where('food_carts.user_id', $req->userId)
+                ->where('food_carts.d_flg', $req->flg)
+                ->where('food_carts.d_date', $req->date)
+                ->get();
+
+                $arr['data'] = $seleted_diet;
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $arr['errorcode'] = '2';
+            $arr['msg'] = '오류가 발생하여 식단을 추가하지 못했습니다.';
         }
         return $arr;
     }
@@ -267,13 +276,11 @@ class ApiController extends Controller
 
             $arr['data'] = $seleted;
 
-            // 모든 작업이 성공적으로 완료되면 커밋
             DB::commit();
         } catch (\Exception $e) {
-            // 예외 발생 시 롤백
             DB::rollBack();
             $arr['errorcode'] = '1';
-            $arr['msg'] = '오류가 발생하여 음식을 삭제하지 못했습니다. ' . $e->getMessage();
+            $arr['msg'] = '오류가 발생하여 음식을 삭제하지 못했습니다.';
         }
 
         return $arr;
@@ -294,8 +301,10 @@ class ApiController extends Controller
 
             $seleted_diet = DB::table('food_carts')
                 ->select('food_carts.cart_id', 'food_carts.user_id', 'food_carts.fav_id', 'fav_diets.fav_name')
-                ->join('fav_diets', 'fav_diets.fav_id', '=', 'food_carts.fav_id')
+                ->join('fav_diets', 'fav_diets.fav_id', 'food_carts.fav_id')
                 ->where('food_carts.user_id', $req->userId)
+                ->where('food_carts.d_flg', $req->flg)
+                ->where('food_carts.d_date', $req->date)
                 ->get();
 
             if ($seleted_diet->count() > 0 ) {
@@ -305,13 +314,11 @@ class ApiController extends Controller
                 $arr['data'] = '식단 목록이 없습니다.';
             }
 
-            // 모든 작업이 성공적으로 완료되면 커밋
             DB::commit();
         } catch (\Exception $e) {
-            // 예외 발생 시 롤백
             DB::rollBack();
             $arr['errorcode'] = '2';
-            $arr['msg'] = '오류가 발생하여 식단을 삭제하지 못했습니다. ' . $e->getMessage();
+            $arr['msg'] = '오류가 발생하여 식단을 삭제하지 못했습니다.';
         }
 
         return $arr;
