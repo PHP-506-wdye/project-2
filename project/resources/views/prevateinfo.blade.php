@@ -48,23 +48,28 @@
                 <tr>
                     <td><label for="gender">성별</label></td>
                     <td>
-                        <input type="radio" name="gender" id="gender" value="0" class="genman"  readonly>남자<img src="{{ asset('img/manmark.png') }}">
-                        <input type="radio" name="gender" id="gender" value="1" class="genwoman" readonly>여자<img src="{{asset('img/womanmark.png')}}">
+                        @if($data->user_gen == 1)
+                            <input type="radio" name="gender" id="gender" value="0" class="genman" readonly>남자<img src="{{ asset('img/manmark.png') }}">
+                            <input type="radio" name="gender" id="gender" value="1" class="genwoman" readonly checked>여자<img src="{{asset('img/womanmark.png')}}">
+                        @else
+                            <input type="radio" name="gender" id="gender" value="0" class="genman" readonly checked>남자<img src="{{ asset('img/manmark.png') }}">
+                            <input type="radio" name="gender" id="gender" value="1" class="genwoman" readonly>여자<img src="{{asset('img/womanmark.png')}}">
+                        @endif
                     </td>
                 </tr>
                 <tr>
                     <td><label for="user_birth">나이</label></td>
-                    <td><input type="date" name="user_birth" id="user_birth" max="{{ now()->toDateString() }}">
+                    <td><input type="date" name="user_birth" id="user_birth" max="{{ now()->toDateString() }}" value="{{$data->user_birth}}">
                         <span id="maxdate"></span>
                     </td>
                 </tr>
                 <tr>
                     <td><label for="tall">키(cm)</label></td>
-                    <td><input type="number" name="tall" id="tall"></td>
+                    <td><input type="number" name="tall" id="tall" value="{{$data->user_tall}}"></td>
                 </tr>
                 <tr>
                     <td><label for="weight">몸무게(Kg)</label></td>
-                    <td><input type="number" name="weight" id="weight"></td>
+                    <td><input type="number" name="weight" id="weight" value="{{$data->user_weight}}"></td>
                 </tr>
                 <tr>
                     <div class="form_radio_btn">

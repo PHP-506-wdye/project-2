@@ -38,7 +38,7 @@
                         <i class="bx bx-bowl-rice fs-xl opacity-60 me-2"></i>
                         식단설정
                     </a>
-                    <a href="{{route('user.board')}}" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <a href="{{route('user.board')}}" class="list-group-item list-group-item-action d-flex align-items-center" id="myboard">
                         <i class="bx bx-clipboard fs-xl opacity-60 me-2"></i>
                         내가 남긴 글 & 댓글
                     </a>
