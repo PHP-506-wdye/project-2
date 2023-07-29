@@ -6,36 +6,47 @@
     <div class="col-md-8 offset-lg-1 pb-5 mt-n3 mb-2 mb-lg-4 mt-n3 mt-md-0">
         <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                 <h1 class="h2 pt-xl-1 pb-3">
-                    <a href="{{route('user.board')}}" id="boardBtn" class="fc-green">나의 게시글({{$boardCnt}})</a> /
+                    <a href="{{route('user.board')}}" id="boardBtn">나의 게시글({{$boardCnt}})</a> /
                     <a href="{{route('user.reply')}}" id="replyBtn">나의 댓글({{$replyCnt}})</a>
                 </h1>
             <div class="row pb-2">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table user-table no-wrap">
+                            {{-- <div class="table"> --}}
+                            <div>
+                                <table class="table text-center">
                                     <thead>
                                         <tr>
-                                            <th class="border-top-0" style="max-width: 20px;">no</th>
-                                            <th class="border-top-0">게시글 제목</th>
-                                            <th class="border-top-0">게시글 생성일</th>
+                                            <th class="border-top-0" width="10%">no</th>
+                                            @if($flg)
+                                                <th class="border-top-0" width="60%">게시글 제목</th>
+                                            @else
+                                                <th class="border-top-0" width="60%">댓글 내용</th>
+                                            @endif
+                                            <th class="border-top-0" width="30%">생성일</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($data as $item)
                                             <tr>
-                                                <td style="max-width: 20px;">{{ $item->board_id }}</td>
+                                                <td>
+                                                    @if(isset($item->reply_id))
+                                                        {{ $item->reply_id }}
+                                                    @else
+                                                        {{ $item->board_id }}
+                                                    @endif
+                                                </td>
                                                 <td class="btitle">
                                                     <a href="{{route('board.show', ['board' => $item->board_id])}}">
                                                         @if(isset($item->btitle))
-                                                            {{$item->btitle }}                                                 
+                                                            {{mb_strlen($item->btitle) >= 15 ? mb_substr($item->btitle,0,15) . "..." :  $item->btitle}}                                            
                                                         @elseif(isset($item->rcontent))
-                                                            {{$item->rcontent }}
+                                                            {{mb_strlen($item->rcontent) >= 15 ? mb_substr($item->rcontent,0,15) . "..." :  $item->rcontent}}
                                                         @endif
                                                     </a>
                                                 </td>
-                                                <td>{{ $item->created_at }}</td>
+                                                <td>{{mb_substr($item->created_at,0,10)}}</td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -109,8 +120,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('subjs')
-    <script src="{{ asset('js/myboard.js') }}"></script>
 @endsection

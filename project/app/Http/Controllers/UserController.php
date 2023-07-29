@@ -338,9 +338,11 @@ class UserController extends Controller
         // ------------- v003 add -------------
         // 수정할 항목을 배열에 담는 변수
         $arrKey = [];
+        $arrKey2 = [];
 
         // 기존 데이터 획득
         $baseUser = UserInfo::find(Auth::User()->user_id);
+        $baseKcal = KcalInfo::find(Auth::User()->user_id);
 
         // 수정할 항목을 배열에 담는 처리
         if($req->user_name !== $baseUser->user_name){
@@ -352,15 +354,20 @@ class UserController extends Controller
         if($req->user_phone_num !== $baseUser->user_phone_num){
             $arrKey[] = 'user_phone_num';
         }
-
+        if($req->user_tall !== $baseKcal->user_tall){
+            $arrKey2[] = 'user_tall';
+        }
+        if($req->user_weight !== $baseKcal->user_weight){
+            $arrKey2[] = 'user_weight';
+        }
+        
         // 유효성 검사
         $rules = [
             'user_name'  => 'required|regex:/^[a-zA-Z가-힣]+$/|min:2|max:30'
-            // ,'user_email'    => 'required|unique:user_infos,user_email|email|min:2|max:20'
             ,'nkname'   => 'required|unique:user_infos,nkname|regex:/^[a-zA-Z가-힣0-9]+$/|min:2|max:7'
             ,'user_phone_num'  => 'required|unique:user_infos,user_phone_num|regex:/^01[0-9]{9,10}$/'
-            // ,'user_tall'    => 'regex:/^[0-9]+$|max:5'
-            // ,'user_weight'   => 'regex:/^[0-9]+$|max:5'
+            ,'user_tall'    => 'regex:/^[0-9]+$/|max:5'
+            ,'user_weight'   => 'regex:/^[0-9]+$/|max:5'
             ];
 
         $messages = [
@@ -368,8 +375,6 @@ class UserController extends Controller
             'user_name.regex'       => '한글과 영문만 허용합니다.',
             'user_name.max'         => ':max자까지 입력 가능합니다.',
             'user_name.min'         => ':min자 이상 입력 가능합니다.',
-            // 'user_email'            => 'email형식에 맞춰주세요.',
-            // 'user_email.unique'     => '이미 사용중인 email 입니다.',
             'nkname.required'       => '닉네임은 필수 입력 사항입니다.',
             'nkname.unique'         => '이미 사용중인 닉네임 입니다.',
             'nkname.regex'          => '영문 대소문자, 한글, 숫자로 구성하여 입력해주세요.',
@@ -377,25 +382,33 @@ class UserController extends Controller
             'user_phone_num.required'=> '전화번호는 필수입력사항 입니다.',
             'user_phone_num.unique'  => '입력하신 연락처로 가입한 이메일이 존재합니다.',
             'user_phone_num.regex'  => '전화번호 형식에 맞추어 입력해주세요.',
-            // 'user_tall'             => '입력하신 키를 다시 확인해주세요.',
-            // 'user_weight'           => '입력하신 몸무게를 다시 확인해주세요.',
+            'user_tall'             => '입력하신 키를 다시 확인해주세요.',
+            'user_weight'           => '입력하신 몸무게를 다시 확인해주세요.',
         ];
         $arrchk = [];
+        $arrchk2 = [];
 
         // 유효성 체크할 항목 세팅
         foreach($arrKey as $val){
             $arrchk[$val] = $rules[$val];
         }
-
+        foreach($arrKey2 as $val){
+            $arrchk2[$val] = $rules[$val];
+        }
         // 유효성 체크
         $req->validate($arrchk, $messages);
+        $req->validate($arrchk2, $messages);
         
         // 수정할 데이터 셋팅
         foreach($arrKey as $val) {
             $baseUser->$val = $req->$val;
         }
+        foreach($arrKey2 as $val) {
+            $baseKcal->$val = $req->$val;
+        }
 
         $baseUser->save(); // update
+        $baseKcal->save(); // update
 
         $changemsg = "변경 완료되었습니다.";
 
@@ -526,7 +539,7 @@ class UserController extends Controller
             $KcalInfo->save();
             return redirect()->route('user.prevateinfo');
         }
-}
+    }
 
     public function logout() {
         Session::flush(); // 세션 파기
@@ -536,49 +549,49 @@ class UserController extends Controller
 
     //회원 탈퇴 부분
     //탈퇴 페이지 이동
-public function userwithdraw(){
-    return view('Userdraw');
-}   
+    public function userwithdraw(){
+        return view('Userdraw');
+    }   
 
-// ------------- v003 add -------------
-public function myboard(){
+    // ------------- v003 add -------------
+    public function myboard(){
 
-    if(!Auth::user()) {
-        return redirect()->route('user.login');
+        if(!Auth::user()) {
+            return redirect()->route('user.login');
+        }
+
+        $user = Auth::user()->user_id;
+
+        $board = Board::where('user_id', $user)->get();
+        $board_list = Board::where('user_id', $user)->orderBy('board_id','desc')->paginate(10);
+        $board_cnt = count($board);
+        $flg = true;
+
+        $reply = BoardReply::where('user_id', $user)->get();
+        $reply_cnt = count($reply);
+
+        return view('myboard')->with('data',$board_list)->with('boardCnt',$board_cnt)->with('replyCnt', $reply_cnt)->with('flg',$flg);
     }
 
-    $user = Auth::user()->user_id;
+    public function myreply(){
 
-    $board = Board::where('user_id', $user)->get();
-    $board_list = Board::where('user_id', $user)->orderBy('board_id','desc')->paginate(10);
-    $board_cnt = count($board);
+        if(!Auth::user()) {
+            return redirect()->route('user.login');
+        }
 
-    $reply = BoardReply::where('user_id', $user)->get();
-    // $reply_list = BoardReply::where('user_id', $user)->orderBy('reply_id','desc')->paginate(10);
-    $reply_cnt = count($reply);
+        $user = Auth::user()->user_id;
 
+        $board = Board::where('user_id', $user)->get();
+        $board_cnt = count($board);
+        $flg = false;
 
-    return view('myboard')->with('data',$board_list)->with('boardCnt',$board_cnt)->with('replyCnt', $reply_cnt);
-}
+        $reply = BoardReply::where('user_id', $user)->get();
+        $reply_list = BoardReply::where('user_id', $user)->orderBy('reply_id','desc')->paginate(10);
+        $reply_cnt = count($reply);
 
-public function myreply(){
-
-    if(!Auth::user()) {
-        return redirect()->route('user.login');
+        return view('myboard')->with('boardCnt',$board_cnt)->with('data',$reply_list)->with('replyCnt', $reply_cnt)->with('flg',$flg);
     }
-
-    $user = Auth::user()->user_id;
-
-    $board = Board::where('user_id', $user)->get();
-    $board_cnt = count($board);
-
-    $reply = BoardReply::where('user_id', $user)->get();
-    $reply_list = BoardReply::where('user_id', $user)->orderBy('reply_id','desc')->paginate(10);
-    $reply_cnt = count($reply);
-
-    return view('myboard')->with('boardCnt',$board_cnt)->with('data',$reply_list)->with('replyCnt', $reply_cnt);
-}
-// ------------- v003 add -------------
+    // ------------- v003 add -------------
 
 }
 

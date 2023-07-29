@@ -16,15 +16,29 @@ if(medal){
 }
 // nav 하이라이트
 const navItems = document.querySelectorAll('.list-group-item');
+const myboardNav = document.getElementById('myboard');
+const boardBtn = document.getElementById('boardBtn');
+const replyBtn = document.getElementById('replyBtn');
 
 let currentURL = window.location.href; // 현재 URL
+let replyUrl = 'http://localhost/user/userReply';
+let boardUrl = 'http://localhost/user/userBoard';
 
-    navItems.forEach(function(item) {
-        let itemUrl = item.href;
-        if (currentURL.includes(itemUrl)) {
-            item.classList.add('active');
-        }
-    });
+navItems.forEach(function(item) {
+    let itemUrl = item.href;
+    if (currentURL.includes(itemUrl)) {
+        item.classList.add('active');
+    }
+});
+
+if(currentURL.includes(replyUrl)){
+    myboardNav.classList.add('active');
+    replyBtn.classList.add('fc-green');
+}
+
+if(currentURL.includes(boardUrl)){
+    boardBtn.classList.add('fc-green');
+}
 
 // 이전 페이지로 가는 버튼
 const backBtn = document.getElementById('backBtn');
@@ -32,6 +46,13 @@ const backBtn = document.getElementById('backBtn');
 function redirectBack(){
     window.history.back();
 };
+
+// myboard
+$(document).ready(function(){
+    $("#boardBtn").click(function(){
+        console.log("ddd");
+    });
+});
 
 // const test = document.getElementsByClassName('list-group-item');
 
