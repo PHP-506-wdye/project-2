@@ -10,11 +10,14 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">회원 등록 음식 관리</h4>
+                    <h4 class="card-title">회원 등록 음식 관리
+                        <form class="app-search ps-3" action="{{route('food.search')}}" method="get">
+                            @csrf
+                            <input type="text" class="form-control" name="search" placeholder="음식이름으로 검색해주세요" autocomplete="off">
+                            <button type="submit" class="btn srh-btn"><i class="ti-search"></i></button>
+                        </form>
+                    </h4>
                     <h6 class="card-subtitle">음식정보 <code>.관리자용</code></h6>
-                    <div class="text-end upgrade-btn">
-                        <button type="button" onclick="chkDel()" class="btn delBtn">선택삭제</button>
-                    </div>
                     <div class="table-responsive">
                         <table class="table user-table no-wrap">
                             <thead>
@@ -24,7 +27,9 @@
                                     <th class="border-top-0">음식 이름</th>
                                     <th class="border-top-0">음식 등록일</th>
                                     <th class="border-top-0">음식 삭제일</th>
-                                    <th></th>
+                                    <th>                        
+                                        <button type="button" onclick="chkDel()" class="btn delBtn">선택삭제</button>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,7 +49,7 @@
                                                 @if(isset($item->deleted_at))
                                                 <td></td>
                                                 @else
-                                                    <td><input type="checkbox" class="delChk" value="{{ $item->food_id }}"></td>
+                                                    <td><input type="checkbox" class="delChk ms-4" value="{{ $item->food_id }}"></td>
                                                 @endif
                                             </tr>
                                         </form>                                                    
@@ -79,32 +84,28 @@
                     </div>
                     {{-- 페이지네이션 --}}
                     @if ($data->hasPages())
-                        <ul class="pagination pagination">
-        
+                        <ul class="pagination pagination">                    
                             @php
                                 $block = 5;
                                 $startPage = max(1, $data->currentPage() - floor($block / 2));
                                 $endPage = min($startPage + $block - 1, $data->lastPage());
                             @endphp
-        
                             {{-- 첫 페이지 버튼 --}}
                             @if ($data->onFirstPage())
                                 <li><<</li>
                             @else
                                 <li class="active">
-                                    <a href="{{ $data->url(1) }}" rel="prev"><<</a>
+                                    <a href="{{ $data->appends(request()->except('page'))->url(1) }}" rel="prev"><<</a>
                                 </li>
-                            @endif
-        
+                            @endif                  
                             {{-- 이전 페이지 버튼 --}}
                             @if ($data->onFirstPage())
                                 <li><</li>
                             @else
                                 <li class="active">
-                                    <a href="{{ $data->previousPageUrl() }}" rel="prev"><</a>
+                                    <a href="{{ $data->appends(request()->except('page'))->previousPageUrl() }}" rel="prev"><</a>
                                 </li>
-                            @endif
-        
+                            @endif                    
                             {{-- 페이징 --}}
                             {{-- range() : 지정된 범위의 숫자를 생성하여 배열로 반환 --}}
                             @foreach(range($startPage, $endPage) as $i)
@@ -112,24 +113,22 @@
                                     <li class="active"><span>{{ $i }}</span></li>
                                 @else
                                     <li class="active">
-                                        <a href="{{$data->url($i)}}">{{$i}}</a>
+                                        <a href="{{$data->appends(request()->except('page'))->url($i)}}">{{$i}}</a>
                                     </li>
                                 @endif
                             @endforeach
-        
                             {{-- 다음 페이지 버튼 --}}
                             @if ($data->hasMorePages())
                                 <li class="active">
-                                    <a href="{{$data->nextPageUrl()}}">></a>
+                                    <a href="{{$data->appends(request()->except('page'))->nextPageUrl()}}">></a>
                                 </li>
                             @else
                                 <li>></li> 
                             @endif
-        
                             {{-- 마지막 페이지 --}}
                             @if ($data->hasMorePages())
                                 <li class="active">
-                                    <a href="{{ $data->url($data->lastPage()) }}" rel="next">>></a>
+                                    <a href="{{ $data->appends(request()->except('page'))->url($data->lastPage()) }}" rel="next">>></a>
                                 </li>
                             @else
                                 <li>>></li> 

@@ -129,3 +129,12 @@ input.serving{
 td.masschk{
     text-align: center;
 }
+
+.app-search .srh-btn{
+    top: 2px;
+    right: 0;
+}
+
+.card-subtitle{
+    display: inline-block;
+}

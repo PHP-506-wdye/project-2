@@ -96,4 +96,10 @@ Route::get('/user/food', [FoodController::class, 'userfood'])->name('user.food')
 Route::get('/manager/food', [FoodController::class, 'managerfood'])->name('manager.food');
 Route::post('/food/insert', [FoodController::class, 'foodinsert'])->name('food.insert');
 
+Route::get('/manager/search', [FoodController::class, 'managerfoodSearch'])->name('manager.search');
+Route::get('/food/search', [FoodController::class, 'foodSearch'])->name('food.search');
+
+
+
+
 
