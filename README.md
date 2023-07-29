@@ -21,6 +21,6 @@
    ![php](https://github.com/PHP-506-wdye/project-2/assets/126547805/4e60555c-e228-4625-ab55-1ffc29650c2c)![laravel](https://github.com/PHP-506-wdye/project-2/assets/126547805/94a7b14d-d788-4515-b3b6-5e3ba5df0e0b)![javascript](https://github.com/PHP-506-wdye/project-2/assets/126547805/f9e4157c-0bf0-4ddf-8f74-0b291ac6bcf4)![css3](https://github.com/PHP-506-wdye/project-2/assets/126547805/238fd694-2056-4969-9035-b3b6f095923a)![html5](https://github.com/PHP-506-wdye/project-2/assets/126547805/ef5011d9-5fd1-4391-b57f-11f907b45097)![visual-studio-code](https://github.com/PHP-506-wdye/project-2/assets/126547805/ea1e0a09-9bf9-46b7-9cb5-42fedd776ada)![bootstrap](https://github.com/PHP-506-wdye/project-2/assets/126547805/33c44e47-3165-414e-ab5d-fea85ecbf2b2)
 
    
-   (2차시)PPT : https://www.canva.com/design/DAFnEjbiGy0/336ErK0pakvpt8kpe768SQ/edit?utm_content=DAFnEjbiGy0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+   (2차시)PPT : https://www.canva.com/design/DAFnEjbiGy0/HVmbcWDp7ID0kHIMiGu89g/view?utm_content=DAFnEjbiGy0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
    
    (3차시)PPT : https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
