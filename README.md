@@ -11,6 +11,7 @@
    - 퀘스트를 통한 건강 생활 습관 형성
 
 3. 주요 참고 자료
+   - 식품의약품안전처_식품 영양성분 정보(공공데이터 포털: https://www.data.go.kr/data/15057436/openapi.do?recommendDataYn=Y)
    - 시중의 어플 기능들 참고(타임스탬프, 밀리그램, 야지오 칼로리 계산기, FastSecret의 칼로리 카운터, 인아웃-칼로리 계산&다이어트 기록)등
    - 대한당요병학회(https://www.diabetes.or.kr/general/dietary/dietary_02.php?con=2)
    - 미플린 세인트 지어 방정식 참고자료(https://en.wikipedia.org/wiki/Basal_metabolic_rate)
