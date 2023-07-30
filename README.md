@@ -8,6 +8,7 @@
    - 자주 먹는 식단을 통한 식단 관리
    - 커뮤니티를 통한 식단 공유 및 식단 개선
    - 퀘스트를 통한 건강 생활 습관 형성
+   - 등록 음식, 유저, 게시글, 댓글, 신고 내역 관리가 가능한 관리자 페이지 제작
    - [소개 PPT 링크](https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
 ## 진행 기간
