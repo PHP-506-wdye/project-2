@@ -20,7 +20,7 @@
    - 미플린 세인트 지어 방정식 참고자료(https://en.wikipedia.org/wiki/Basal_metabolic_rate)
 
 ## 개발 환경 및 장비
-<img src="https://img.shields.io/badge/PHP-#777BB4?style=flat-square&logo=PHP&logoColor=#777BB4"/>
+<img src="https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=PHP&logoColor=white"/>
 
 
    
