@@ -10,7 +10,8 @@
    - [소개 PPT 링크](https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
 ## 진행 기간
-   - 1차 : 
+   - 1차 : 2023.06.09 ~ 2023.06.28
+   - 2차 : 2023.07.14 ~ 2023.07.26
 
 ## 주요 참고 자료
    - 식품의약품안전처_식품 영양성분 정보(공공데이터 포털: https://www.data.go.kr/data/15057436/openapi.do?recommendDataYn=Y)
