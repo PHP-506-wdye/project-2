@@ -1,5 +1,3 @@
-![image](https://github.com/PHP-506-wdye/project-2/assets/126547857/9f9e3d9c-5fe7-41af-99ae-856327d59aa5)
-
 ## 프로젝트명
    - REBORN : 식단 관리 서비스
 
