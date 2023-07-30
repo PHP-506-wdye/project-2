@@ -1,11 +1,12 @@
+![image](https://github.com/PHP-506-wdye/project-2/assets/126547857/11383bc3-4ce2-4400-9561-57abaa4f92ce)
+
 ## 프로젝트명
    - REBORN : 식단 관리 서비스
 
 ## 프로젝트 설명
-   - 고객의 균형 잡힌 식단을 갖도록 유도
-   - 섭취한 음식들의 영양분에 집중
+   - 식품의약품안전처의 공공데이터를 활용해 섭취한 음식들의 영양분에 집중해 고객의 균형 잡힌 식단을 갖도록 유도
    - 자주 먹는 식단을 통한 식단 관리
-   - 커뮤니티를 통한 공유 및 식단개선
+   - 커뮤니티를 통한 식단 공유 및 식단 개선
    - 퀘스트를 통한 건강 생활 습관 형성
    - [소개 PPT 링크](https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
