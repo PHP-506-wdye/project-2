@@ -1,16 +1,3 @@
-// todo 취소나 저장하지 않고 나갔을 때 처리
-// window.onbeforeunload = function() {
-//     return "저장되지 않은 변경사항이 있습니다. 정말 페이지를 떠나실 건 가요?";
-// };
-
-// $(document).on("submit", "form", function(){
-//     window.onbeforeunload = null;
-// });
-
-// $(document).on("click", function(){
-//     window.onbeforeunload = null;
-// });
-
 
 // 메뉴 탭
 const tab1 = document.querySelector('.tab1')
@@ -168,7 +155,7 @@ function deletefood(userId, foodId, cartId) {
     .then( data => {
         if(data['errorcode'] === '0') {
             fav_food.replaceChildren()
-            if(data['data'].length < 1) {
+            if(data['data'].length < 1 && fav_diet.children.length < 1) {
                 let selectedFood = document.getElementById('selectedFood');
                 selectedFood.innerHTML = '';
                 return false;
@@ -304,7 +291,7 @@ function deletediet(userId, cartId, favId) {
                 fav_diet.appendChild(deldbtn)
                 fav_diet.appendChild(brp);
             })
-        } else if(data['errorcode'] === '1') {
+        } else if(data['errorcode'] === '1' && fav_food.children.length < 1) {
             let selectedFood = document.getElementById('selectedFood');
             selectedFood.innerHTML = '';
         }
