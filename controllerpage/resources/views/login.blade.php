@@ -13,18 +13,19 @@
     <title>Login</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/monster-admin-lite/" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('temple/assets/images/favicon.png')}}">
+    <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
     <!-- Custom CSS -->
     <link href="{{asset('temple/css/style.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/login.css')}}" rel="stylesheet">
 </head>
 <body>
+    <h1 class="text-center">RE:BORN 관리자</h1>
     <div id="wrap">
         <form action="{{route('login.post')}}"  method="post">
             @csrf
             <div class="container">
                 <div>
-                    <label for="email">Email</label>
+                    <label for="text">ID</label>
                     <br>
                     <input type="text" name="email" id="email" value="{{ $errors->has('email') ? '' : old('email', isset($data) ? $data->user_email : '') }}" autocomplete="off">
                 </div>

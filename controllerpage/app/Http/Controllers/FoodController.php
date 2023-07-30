@@ -19,7 +19,7 @@ class FoodController extends Controller
 
         // 로그인 확인
         if(auth()->guest()) {
-            return redirect()->route('user.login');
+            return redirect()->route('login.get');
         }
 
         $user_id = 0;
@@ -34,7 +34,7 @@ class FoodController extends Controller
 
         // 로그인 확인
         if(auth()->guest()) {
-            return redirect()->route('user.login');
+            return redirect()->route('login.get');
         }
 
         $user_id = 0;
@@ -47,11 +47,50 @@ class FoodController extends Controller
 
     }
 
+    public function managerfoodSearch(Request $req){
+
+        // 로그인 확인
+        if(auth()->guest()) {
+            return redirect()->route('login.get');
+        }
+
+        $user_id = 0;
+        $search = $req->search;
+
+        $foodinfo = FoodInfo::where('user_id',$user_id)
+                    ->where('userfood_flg',$user_id)
+                    ->where('food_name','like','%'.$search.'%')
+                    ->orderBy('food_id','desc')->paginate(10);
+
+        return view('managerfood')->with('data',$foodinfo);
+
+    }
+
+    
+    public function foodSearch(Request $req){
+
+        // 로그인 확인
+        if(auth()->guest()) {
+            return redirect()->route('login.get');
+        }
+
+        $user_id = 0;
+        $search = $req->search;
+
+        $foodinfo = FoodInfo::where('user_id','!=',$user_id)
+                    ->where('food_name','like','%'.$search.'%')
+                    ->orderBy('food_id','desc')
+                    ->paginate(10);
+
+        return view('userfood')->with('data',$foodinfo);
+
+    }
+
     public function foodinsert(Request $req){
 
         // 로그인 확인
         if(auth()->guest()) {
-            return redirect()->route('user.login');
+            return redirect()->route('login.get');
         }
 
         //유효성 검사
