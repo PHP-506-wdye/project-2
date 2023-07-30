@@ -10,7 +10,7 @@
    - 자주 먹는 식단을 통한 식단 관리
    - 커뮤니티를 통한 공유 및 식단개선
    - 퀘스트를 통한 건강 생활 습관 형성
-   - PPT : https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
+   - [소개 PPT 링크](https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
 ## 주요 참고 자료
    - 식품의약품안전처_식품 영양성분 정보(공공데이터 포털: https://www.data.go.kr/data/15057436/openapi.do?recommendDataYn=Y)
