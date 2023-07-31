@@ -37,10 +37,10 @@
                                         <form>
                                             @csrf
                                             <tr>
-                                                <td>{{ $item->food_id }}</td>
-                                                <td>{{ $item->user_id }}</td>
+                                                <td><a data-bs-toggle="modal" data-bs-target="#postModal{{ $item->food_id }}">{{ $item->food_id }}</a></td>
+                                                <td><a data-bs-toggle="modal" data-bs-target="#postModal{{ $item->food_id }}">{{ $item->user_id }}</a></td>
                                                 <td><a data-bs-toggle="modal" data-bs-target="#postModal{{ $item->food_id }}">{{ $item->food_name }}</a></td>
-                                                <td>{{ $item->created_at }}</td>
+                                                <td><a data-bs-toggle="modal" data-bs-target="#postModal{{ $item->food_id }}">{{ $item->created_at }}</a></td>
                                                 @if(isset($item->deleted_at))
                                                     <td>{{$item->deleted_at}}</td>
                                                 @else

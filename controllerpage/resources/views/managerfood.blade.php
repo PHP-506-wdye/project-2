@@ -44,7 +44,7 @@
                                                     <label for="food_name" class="col-md-12 mb-0"><span class="fc-red">⁕</span> 음식이름</label>
                                                     <div class="col-md-12">
                                                         <input type="text"
-                                                            id="food_name" name="food_name" class="form-control ps-0 form-control-line">
+                                                            id="food_name" name="food_name" class="form-control ps-0 form-control-line" autocomplete="off">
                                                     </div>
                                                     <div id="errMsg"></div>
                                                 </div>
@@ -135,9 +135,9 @@
                             <tbody>
                                 @forelse ($data as $item)
                                     <tr>
-                                        <td>{{ $item->food_id }}</td>
+                                        <td><a data-bs-toggle="modal" data-bs-target="#editModal{{ $item->food_id }}">{{ $item->food_id }}</a></td>
                                         <td><a data-bs-toggle="modal" data-bs-target="#editModal{{ $item->food_id }}">{{ $item->food_name }}</a></td>
-                                        <td>{{ $item->created_at }}</td>
+                                        <td><a data-bs-toggle="modal" data-bs-target="#editModal{{ $item->food_id }}">{{ $item->created_at }}</a></td>
                                         @if(isset($item->deleted_at))
                                             <td>{{$item->deleted_at}}</td>
                                         @else
