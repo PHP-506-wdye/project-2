@@ -141,7 +141,8 @@ class SearchController extends Controller
             ->join('fav_diet_food', 'fav_diet_food.fav_id', 'food_carts.fav_id')
             ->join('food_infos', 'food_infos.food_id', 'fav_diet_food.food_id')
             ->where('food_carts.user_id', $id)
-            ->where('fav_diet_food.fav_id', '>' , 0)
+            ->where('food_carts.d_flg', $time)
+            ->where('food_carts.d_date', $date)
             ->get();
 
         // 해당 식단 정보 획득
@@ -163,9 +164,8 @@ class SearchController extends Controller
         }
         
         // 한 유저가 한 식단에 음식 10개 이상 입력 안되게 처리
-        $foodCount = DietFood::select('df_if')
-        ->where('d_id', $insertDietId)
-        ->count();
+        $foodCount = DietFood::where('d_id', $insertDietId)
+            ->count();
         
         if( $foodCount + $foodCart->count() + $favCart->count() > 10 ) {
             // 장바구니 삭제 후 홈으로 리턴
