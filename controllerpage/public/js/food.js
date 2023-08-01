@@ -171,18 +171,19 @@ function foodinsert() {
         else{
             console.log(apiData);
             alert('음식이 등록되었습니다.');
-            inputReset();
+            // inputReset();
+            location.reload();
         }
     });
 }
 
 // 모달창닫힐때
-const insertModal = new bootstrap.Modal(document.getElementById('insertModal'));
+// const insertModal = new bootstrap.Modal(document.getElementById('insertModal'));
 
 // 모달이 닫힐 때 이벤트 리스너 등록
-insertModal._element.addEventListener('hidden.bs.modal', function () {
-    location.reload(); // 모달이 닫힐 때 페이지 새로고침
-});
+// insertModal._element.addEventListener('hidden.bs.modal', function () {
+//     location.reload(); // 모달이 닫힐 때 페이지 새로고침
+// });
 
 // 관리자 음식 수정
 function foodedit(food_id) {

@@ -88,9 +88,13 @@ class ApiFoodController extends Controller
         // 관리자 id와 userfood_flg
         $id = 0;
 
-        // 같은 이름으로 등록 불가능
-        $foods = FoodInfo::where('user_id', $id)->where('userfood_flg', $id)
-        ->get();
+        // 같은 이름으로 등록 불가능(삭제된 음식일 경우는 등록가능)
+        // $foods = FoodInfo::where('user_id', $id)->where('userfood_flg', $id)
+        // ->get();
+        $foods = FoodInfo::where('user_id', $id)
+                ->where('userfood_flg', $id)
+                ->whereNull('deleted_at')
+                ->get();
 
         $dupliCheck = false;
 
@@ -113,6 +117,7 @@ class ApiFoodController extends Controller
             if($dupliCheck){
                 $arr['errorcode'] = '1';
                 $arr['msg'] = '이미 등록된 이름입니다.';
+                $arr['data'] = $foods;
             }
             else{
                 $result = new FoodInfo([
@@ -192,7 +197,7 @@ class ApiFoodController extends Controller
         $foodinfo = FoodInfo::find($id);
 
         // 같은 이름으로 등록 불가능
-        $foods = FoodInfo::where('user_id', $user_id)->where('userfood_flg', $user_id)
+        $foods = FoodInfo::where('user_id', $user_id)->where('userfood_flg', $user_id)->whereNull('deleted_at')
         ->get();
 
 
