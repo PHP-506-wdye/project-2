@@ -291,7 +291,7 @@ function deletediet(userId, cartId, favId) {
                 fav_diet.appendChild(deldbtn)
                 fav_diet.appendChild(brp);
             })
-        } else if(data['errorcode'] === '1' && fav_food.children.length < 1) {
+        } else if(data['errorcode'] === '1' && fav_food.children.length - 2 < 1) {
             let selectedFood = document.getElementById('selectedFood');
             selectedFood.innerHTML = '';
         }
