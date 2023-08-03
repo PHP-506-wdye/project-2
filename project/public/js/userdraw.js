@@ -39,11 +39,11 @@ function chkpass(){
     });
 }
 
-function userdraw(){
+function userdraw(user_id){
         let confirmdraw = confirm("정말 탈퇴하시겠습니까?");
         
         if(confirmdraw){
-            const url = "/api/users/userdraws"
+            const url = "/api/users/"+ user_id;
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             const request = new Request(url,{
                 headers: {
@@ -52,9 +52,9 @@ function userdraw(){
                 },
                 method: 'DELETE',
                 credentials: "same-origin",
-                body: JSON.stringify({
-                    user_id: document.getElementById('id').value
-                })  
+                // body: JSON.stringify({
+                //     user_id: document.getElementById('id').value
+                // })  
             });
 
             fetch(request)

@@ -1,8 +1,8 @@
-function release(user_id){
 
+    function release(user_id){
         let confirmdraw = confirm("복구 시키시겠습니까?");
         if(confirmdraw){
-            const url = "/api/remembers"
+            const url = "/api/users/status/" + user_id;
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             const request = new Request(url,{
                 headers: {
@@ -11,9 +11,9 @@ function release(user_id){
                 },
                 method:'POST',
                 credentials: "same-origin",
-                body: JSON.stringify({
-                    user_id:user_id
-                })  
+                // body: JSON.stringify({
+                //     user_id:user_id
+                // })  
             });
 
             fetch(request)
