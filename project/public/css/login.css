@@ -215,8 +215,20 @@ label {
 }
 
 
-#kakao {
+.socialIcon {
     width: 50px;
+}
+
+#kakao{
+    margin-left: 33px;
+}
+
+/* #google {
+    width: 55px;
+} */
+
+div.social a{
+    margin-right: 25px;
 }
 
 /* 회원가입 파트 */

@@ -195,10 +195,17 @@ class QuestController extends Controller
         // 정해진 시간에 알림 인서트
         foreach ($questStat as $item) {
             if ($item->alarm_time == Carbon::now()->format("H")) {
-                $alarm= new Alarm;
-                $alarm->user_id = $item->user_id;
-                $alarm->alarm_type = '0';  // 퀘스트 알림 타입
-                $alarm->save();
+                $log = DB::table('quest_logs')
+                    ->where('quest_status_id', $item->quest_status_id)
+                    ->where('effective_date', Carbon::now()->format("Y-m-d"))
+                    ->first();
+
+                if ($log->complete_flg === '0') {
+                    $alarm= new Alarm;
+                    $alarm->user_id = $item->user_id;
+                    $alarm->alarm_type = '0';  // 퀘스트 알림 타입
+                    $alarm->save();
+                }
             }
         }
     }

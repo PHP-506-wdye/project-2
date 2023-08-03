@@ -13,7 +13,7 @@
 
     {{-- v001 delete code <div></div> --}}
     <div class="favbox">
-        <h2 class="fav_title">식단음식 상세정보</h2>
+        <h2 class="fav_title">자주먹는 식단</h2>
         <div class="favmaintitle">
             <button type="button" id="greenBtn" onclick="location.href='{{route('recom.get')}}'">식단 추천</button>
         </div>
@@ -122,7 +122,7 @@
                         {{-- </div>  --}}
                         @endforeach
                         <div class="submitbtn">
-                            <button type="button" onclick="location.href='{{route('fav.delete', $id)}}'" id="greenBtn">삭  제</button>
+                            <button type="button" onclick="location.href='{{route('fav.delete', $id)}}'">삭  제</button>
                             <button type="submit" id="greenBtn">수  정</button>
                         </div>
                     @endif

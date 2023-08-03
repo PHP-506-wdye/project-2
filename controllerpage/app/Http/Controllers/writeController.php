@@ -52,12 +52,11 @@ public function commentdel($id){
 //체크된 댓글 삭제 하기
 public function massDelete(Request $request)
 {
-    $ids = $request->get('delchk'); // 'delchk' is the name of your checkbox input
+    $ids = $request->get('delchk'); 
 
     if ($ids) {
         BoardReply::destroy($ids);
 
-        // Use decrement and update with whereIn for selected IDs
         DB::table('boards')
             ->join('board_replies', 'boards.board_id', '=', 'board_replies.board_id')
             ->whereIn('board_replies.reply_id', $ids)
@@ -98,6 +97,16 @@ public function massDelete(Request $request)
         return redirect()->route('board.boardlist');
     }
 
+//체크된 게시글 삭제 하기
+public function bordmassDelete(Request $request)
+{
+
+    $ids = $request->get('delchk'); 
+
+        Board::destroy($ids);
+
+    return redirect()->route('board.boardlist');
+}
     
 
 

@@ -17,7 +17,9 @@
         "laravel/tinker": "^2.7",
         "meilisearch/meilisearch-php": "^1.2",
         "realrashid/sweet-alert": "^7.0",
-        "socialiteproviders/kakao": "^4.2"
+        "socialiteproviders/google": "^4.1",
+        "socialiteproviders/kakao": "^4.2",
+        "socialiteproviders/naver": "^4.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

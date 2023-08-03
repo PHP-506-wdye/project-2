@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>{{ $email }}는 정지된 Email입니다. 고객샌터에 문의해 주세요.</h2>
+    <h2>{{ $email }}는 정지된 Email입니다. 고객센터에 문의해 주세요.</h2>
 </body>
 </html>

@@ -24,11 +24,15 @@
                                                 <th class="border-top-0">게시글 생성일</th>
                                                 <th class="border-top-0">게시글 삭제일</th>
                                                 <th class="border-top-0">삭제여부</th>
+                                                <th class="border-top-0">
+                                                    <input type="checkbox" name='delchk' value='selectall' onclick='selectAll(this)'>
+                                                    <button id="selectdel" onclick="event.preventDefault(); massDelete('{{ route('comment.bordmassDelete') }}')">선택삭제</button>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                                 @foreach ($data as $item)
-                                                    <form action="{{ route('board.boarddel', ['id' => $item->board_id])}}" method="post">
+                                                    <form action="{{ route('board.boarddel', ['id' => $item->board_id])}}"  id="deleteForm{{ $item->board_id }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <tr>
@@ -40,6 +44,9 @@
                                                             <td>{{$item->deleted_at}}</td>
                                                                 @if($item->deleted_at === null)
                                                                     <td><button type="submit" class="delBtn">삭제</button></td>
+                                                                <td class="masschk">    
+                                                                    <input type="checkbox" class="delchk" name="delchk[]" value="{{ $item->board_id }}">
+                                                                </td>
                                                                 @elseif($item->deleted_at !== null)
                                                                     <td>삭제된 게시글입니다.</td>
                                                                 @endif

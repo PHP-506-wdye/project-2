@@ -161,7 +161,7 @@ class BoardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $flg = '0')
+    public function show($id, Request $request)
     {
         if(auth()->guest()) {
             return redirect()->route('user.login');
@@ -179,9 +179,10 @@ class BoardController extends Controller
         }
         
         // 조회수 증가
-        if($flg === '0') {
+        $page = $request->page;
+        if(!isset($page)) {
             DB::table('boards')
-                ->where('board_id', '=', $id)
+                ->where('board_id', $id)
                 ->increment('hits');
         }
         
@@ -399,6 +400,18 @@ class BoardController extends Controller
         // 게시글 삭제 처리
         Board::destroy($id);
 
+        // ------------- v003 add -------------
+        // 게시글에 속한 댓글 삭제 처리
+        BoardReply::where('board_id', $id)
+            ->delete();
+
+        // 게시글 알림 확인
+        Alarm::where('board_id', $id)
+            ->update([
+                'alarm_flg' => '1'
+            ]);
+        // ------------- v003 add -------------
+
         return redirect()->route('board.index');
     }
 
@@ -416,7 +429,7 @@ class BoardController extends Controller
         $validator = Validator::make($req->only('reply'), $rules, $messages);
 
         if ($validator->fails()) {
-            return redirect()->route('board.shows', ['board' => $req->board_id, 'flg' => '1'])
+            return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -437,8 +450,14 @@ class BoardController extends Controller
                 ->increment('replies');
     
             // ------------- v003 add -------------
+            // 해당 게시글에 알림이 있는지 확인
+            $alarmExist = Alarm::where('user_id', $req->user_id)
+                ->where('board_id', $req->board_id)
+                ->where('alarm_flg', '0')
+                ->first();
+
             // 본인이 작성한 댓글은 알림 인서트가 되지 않게 처리
-            if($req->user_id != $user_id) {
+            if($req->user_id != $user_id && !isset($alarmExist)) {
                 // 댓글 알림 테이블 인서트
                 $alarm= new Alarm;
                 $alarm->user_id = $req->user_id;
@@ -450,8 +469,13 @@ class BoardController extends Controller
             // ------------- v003 add -------------
         });
 
+        $replyCount = DB::table('boards')
+            ->where('board_id', $req->board_id)
+            ->first()
+            ->replies;
+
         // 게시글 상세 페이지 이동
-        return redirect()->route('board.shows', ['board' => $req->board_id, 'flg' => '1']);
+        return redirect()->route('board.show', ['board' => $req->board_id, 'page' => ceil($replyCount / 5)]);
     }
 
     // 댓글 삭제
@@ -477,7 +501,7 @@ class BoardController extends Controller
             // ------------- v003 add -------------
         });
 
-        return redirect()->route('board.shows', ['board' => $board, 'flg' => '1']);
+        return redirect()->route('board.show', ['board' => $board, 'page' => '1']);
     }
 
     // v002 add 식단 내려받기 

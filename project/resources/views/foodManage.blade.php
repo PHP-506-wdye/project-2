@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="rigtTwoBtnDiv">
-                                <button type="button" id="greenBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                     삭제
                                 </button>
                                 <button type="submit" id="greenBtn">수정</button>
@@ -123,7 +123,7 @@
                             </div>
                         </div>
                     @else
-                        <form>
+                        {{-- <form>
                             <div id="foodNameGrid">
                                 <h5>음식명</h5>
                             </div>
@@ -163,7 +163,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
+                        <div></div>
                     @endif
                     </div>
                 </div>

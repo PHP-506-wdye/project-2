@@ -33,10 +33,10 @@
                         <div class="fc-red">{{ $message }}</div>
                     @enderror
                 </div>
-                {{-- <div class="col-sm-6 mb-4">
+                <div class="col-sm-6 mb-4">
                     <label for="user_birth" class="form-label fs-base">생년월일</label>
-                    <input type="date" id="user_birth" name="nkname" class="form-control form-control-lg" required value="{{$userKcal->user_birth}}" readonly max="{{ now()->toDateString() }}">
-                </div> --}}
+                    <input type="date" id="user_birth" name="user_birth" class="form-control form-control-lg" required value="{{$userKcal->user_birth}}" readonly max="{{ now()->toDateString() }}">
+                </div>
                 <div class="col-sm-6 mb-4">
                     <label for="user_phone_num" class="form-label fs-base">휴대전화</label>
                     <input type="tel" id="user_phone_num" name="user_phone_num" class="form-control form-control-lg" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value= "{{old('user_phone_num') !== null ? old('user_phone_num') : $data->user_phone_num}}" >
@@ -44,24 +44,24 @@
                         <div class="fc-red">{{ $message }}</div>
                     @enderror
                 </div>
-                {{-- <div class="col-sm-6 mb-4">
-                    <label for="user_tall" class="form-label fs-base">Tall</label>
-                    <input type="number" id="user_tall" class="form-control form-control-lg" value="{{ $errors->has('user_tall') ? old('user_tall') : $userKcal->user_tall}}">
+                <div class="col-sm-6 mb-4">
+                    <label for="user_tall" class="form-label fs-base">키</label>
+                    <input type="number" id="user_tall" class="form-control form-control-lg" value="{{ $errors->has('user_tall') ? old('user_tall') : $userKcal->user_tall}}" name="user_tall">
                     @error('user_tall')
-                        <div class="invalid-feedback">{{ $user_tall }}</div>
+                        <div class="fc-red">{{ $user_tall }}</div>
                     @enderror
-                </div> --}}
-                {{-- <div class="col-sm-6 mb-4">
-                    <label for="user_weight" class="form-label fs-base">Weight</label>
-                    <input type="number" id="user_weight" class="form-control form-control-lg" value="{{$userKcal->user_weight}}">
+                </div>
+                <div class="col-sm-6 mb-4">
+                    <label for="user_weight" class="form-label fs-base">몸무게</label>
+                    <input type="number" id="user_weight" class="form-control form-control-lg" value="{{$userKcal->user_weight}}" name="user_weight">
                     @error('user_weight')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="fc-red">{{ $message }}</div>
                     @enderror
-                </div> --}}
+                </div>
             </div>
             <div class="d-flex mb-4">
-                <button type="button" class="btn btn-secondary me-3" id="backBtn" onclick="redirectBack();">취소</button>
-                <button type= "submit" class="btn greenBtn">정보수정</button>
+                <button type="reset" class="btn btn-secondary me-3">취소</button>
+                <button type="submit" class="btn greenBtn">정보수정</button>
             </div>
         </form>
         @if(session('changemsg'))

@@ -12,8 +12,8 @@
         <form action="{{route('search.list.get', ['id' => Auth::user()->user_id])}}" method="post" class="searchform">
             @csrf
             <div class="searchdiv">
-                <input type="hidden" name="date" value="{{$data['date']}}">
-                <input type="hidden" name="time" value="{{$data['time']}}">
+                <input type="hidden" name="date" id="date" value="{{$data['date']}}">
+                <input type="hidden" name="time" id="timeFlg" value="{{$data['time']}}">
                 <input type="text" name="search_input" class="searchip" placeholder="검색할 단어를 입력하세요." value="{{ old('search_input')}}">
                 <button type="submit" class="searchbtn"><i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i></button>
             </div>
@@ -27,6 +27,11 @@
             <div class="tab2">
                 <i class="fa-solid fa-cart-shopping" style="color: #538e04;"></i>
                 선택된 음식
+                <span id="selectedFood">
+                    @if (count($seleted) > 0 || count($seleted_diet) > 0)
+                        new
+                    @endif
+                </span>
             </div>
             <div class="tab3" onclick="location.href='{{route('food.index')}}'">
                 <i class="fa-solid fa-mortar-pestle" style="color: #6799e4;"></i>
@@ -49,8 +54,6 @@
                     <input type="number" name="userving" id="userving" min="0.5" step="0.5" max="100" value="1">
                     <input type="checkbox" name="usercheck" id="usercheck" value="{{$item->food_id}}" onclick='getFoodValue(event, {{Auth::user()->user_id}})'>
                     <br>
-                    {{-- <strong>영양성분</strong>
-                    <span> > </span> --}}
                     <div class="searchInfo">
                         <span>칼로리 : {{$item->kcal}}</span>
                         <span>탄수화물 : {{$item->carbs}}</span>
@@ -61,10 +64,10 @@
                     </div>
                     <hr class="search_hr">
                 </div>
-                @empty
+            @empty
                 <div>검색한 음식이 없습니다.</div>
                 <div>등록 음식 관리를 클릭해 음식을 입력하세요.</div>
-                @endforelse
+            @endforelse
         </div>
         @else
             <div class="nosearch"></div>
@@ -161,7 +164,11 @@
                         </div>
                 @endif
             <div class="btn">
-                <button type="button" onclick="location.href='{{route('search.delete')}}'">취소</button>
+                <form action="{{route('search.delete', ['date' => $data['date'], 'time' => $data['time']])}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">취소</button>
+                </form>
                 <button type="button" id="greenBtn" onclick="location.href='{{route('search.insert', 
                 ['date' => $data['date'], 'time' => $data['time']])}}'">입력</button>
             </div>

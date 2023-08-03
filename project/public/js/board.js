@@ -31,16 +31,40 @@ function likeUpDown() {
         return data.json();
     })
     .then(apiData  => {
-        let likeUpDown = document.querySelector('.likeUpDown');
-        if (apiData["errorcode"] === "0") {
-            likeUpDown.id = 'greenBtn';
-        } else if (apiData["errorcode"] === "1") {
-            likeUpDown.removeAttribute( 'id' );
+        if(apiData["errorcode"] === "0") {
+            let likeUpDown = document.querySelector('.likeUpDown');
+            if (apiData["msg"] === "좋아요 증가") {
+                likeUpDown.id = 'greenBtn';
+            } else {
+                likeUpDown.removeAttribute( 'id' );
+            }
+            let likes = document.getElementById('likes');
+            likes.innerHTML = apiData['data']['likes'];
+        } else {
+            alert(apiData['msg']);
         }
-        let likes = document.getElementById('likes');
-        likes.innerHTML = apiData['data']['likes'];
     });
 }
+
+// function reReplyFormInsert(event) {
+//     const replyBtn = event.target;
+//     const replyDiv = replyBtn.parentNode;
+    
+//     const reReplyDiv = document.createElement('div');
+//     const reReplyForm = document.createElement('form');
+//     const reReplyInput = document.createElement('input');
+//     reReplyInput.setAttribute('type', 'text');
+//     reReplyInput.setAttribute('name', 'reReply');
+//     const reReplyButton = document.createElement('button');
+//     reReplyButton.innerHTML = '작성';
+//     reReplyButton.setAttribute('id', 'greenBtn');
+    
+//     replyDiv.appendChild(reReplyDiv);
+//     reReplyDiv.appendChild(reReplyForm);
+//     reReplyForm.appendChild(reReplyInput);
+//     reReplyForm.appendChild(reReplyButton);
+//     replyBtn.disabled = true;
+// }
 
 function boardFormChk() {
     const boardTitle = document.getElementById('title');
@@ -125,9 +149,10 @@ function DietShare() {
         data['data'].forEach(fav => {
             let foodName = document.createElement('input');
             let intake = document.createElement('input');
-            // let br = document.createElement('br');
             foodName.value = fav.food_name;
             intake.value = fav.fav_f_intake;
+            foodName.readOnly = true;
+            intake.readOnly = true;
 
             Diet.appendChild(foodName);
             Diet.appendChild(intake);

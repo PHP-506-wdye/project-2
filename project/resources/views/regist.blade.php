@@ -15,8 +15,8 @@
                 <div class="email">
                     <label for="user_email">이메일</label>
                     <br>
-                    @if (isset($userInfo))
-                        <input type="text" name="user_email" id="user_email" value="{{ $userInfo['email'] }}" required readonly>
+                    @if (isset($userInfo['email']))
+                        <input type="text" name="user_email" id="user_email" value="{{ $errors->has('user_email') ? old('user_email') : $userInfo['email'] }}" required readonly>
                     @else
                         <input type="text" name="user_email" id="user_email" value="{{ $errors->has('user_email') ? '' : old('user_email', isset($data) ? $data->user_email : '') }}" autocomplete="off" required>
                         {{-- <button type="button" id="checkEmail" onclick="duplicationEmail();">중복체크</button> --}}
@@ -29,8 +29,8 @@
                 <div>
                     <label for="user_name">이름</label>
                     <br>
-                    @if (isset($userInfo))
-                        <input type="text" name="user_name" id="user_name" value="{{ $userInfo['name'] }}" required
+                    @if (isset($userInfo['name']))
+                        <input type="text" name="user_name" id="user_name" value="{{ $errors->has('user_name') ? old('user_name') : $userInfo['name'] }}" required
                         @if ($userInfo['name'] !== '')
                             readonly
                         @endif
@@ -42,7 +42,7 @@
                         @enderror
                     @endif
                 </div>
-                @if ($userInfo['social'] !== '')
+                @if (isset($userInfo['social']))
                     <input type="hidden" name="social" value="{{ $userInfo['social'] }}">
                 @endif
                 <div>
@@ -73,10 +73,18 @@
                 <div>
                     <label for="user_phone_num">전화번호</label>
                     <br>
-                    <input type="text" name="user_phone_num" id="user_phone_num"  value="{{ $errors->has('user_phone_num') ? '' : old('user_phone_num', isset($data) ? $data->user_phone_num : '') }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                    @error('user_phone_num')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    @if (isset($userInfo['phonenum']))
+                        <input type="text" name="user_phone_num" id="user_phone_num" value="{{ $errors->has('user_phone_num') ? old('user_name') : $userInfo['phonenum'] }}" required
+                        @if ($userInfo['phonenum'] !== '')
+                            readonly
+                        @endif
+                        >
+                    @else
+                        <input type="text" name="user_phone_num" id="user_phone_num"  value="{{ $errors->has('user_phone_num') ? '' : old('user_phone_num', isset($data) ? $data->user_phone_num : '') }}" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        @error('user_phone_num')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    @endif
                 </div>
                 <div>
                     <label for="user_birth">생년월일</label>

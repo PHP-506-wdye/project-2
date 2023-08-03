@@ -6,12 +6,6 @@ body {
     font-size:16px;
 }
 @media screen and (max-width:500px){
-    .RecommentDiv {
-        width: 300px;
-    }
-    .contentDiv, .foodnutri {
-        width: 250px;
-    }
     .inputRadioDiv input[type=radio]+label{
         width:55px;
         font-size:13px;

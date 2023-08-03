@@ -62,7 +62,6 @@
                                                 @endforeach
                                         </tbody>
                                     </table>
-                                     
                                 </div>
                                 {{-- 페이지네이션 --}}
                                 @if ($data->hasPages())

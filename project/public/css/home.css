@@ -165,7 +165,7 @@ a#layorBtn:hover{
     width: 95vw;
     margin: 0 auto 40px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(490px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
 }
 div.diet1{
     display: flex;

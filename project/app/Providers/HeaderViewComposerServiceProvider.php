@@ -26,7 +26,7 @@ class HeaderViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', function ($view) {
+        View::composer('layout.header', function ($view) {
             // 유저 알림 정보 획득
             if(Auth::user()) {
                 $user_id = Auth::user()->user_id;

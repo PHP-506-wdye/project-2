@@ -29,7 +29,7 @@ Route::resource('/board', BoardController::class);
 
 Route::get('/board/{board}/detail', [BoardController::class, 'showDetail'])->name('board.showDetail');
 Route::get('/board/{board}/list', [BoardController::class, 'indexNum'])->name('board.indexNum');
-Route::get('/board/{board}/{flg}', [BoardController::class, 'show'])->name('board.shows');
+// Route::get('/board/{board}?page={pages}', [BoardController::class, 'show'])->name('board.shows');
 Route::post('/board/reply', [BoardController::class, 'replyPost'])->name('board.replyPost');
 Route::delete('/board/reply/{board}/{id}', [BoardController::class, 'replyDelete'])->name('board.replyDelete');
 
@@ -130,7 +130,8 @@ Route::get('/resend-email', [UserController::class, 'resend_email'])->name('rese
 Route::post('/users/accessnum', [UserController::class, 'accessok'])->name('users.accessok');
 
 // 사용자의 작성글, 댓글
-Route::get('/user/userBoard', [UserController::class, 'myBoard'])->name('user.board');
+Route::get('/user/userBoard', [UserController::class, 'myboard'])->name('user.board');
+Route::get('/user/userReply', [UserController::class, 'myreply'])->name('user.reply');
 
 //----------------테스트용--------------------------------------
 // use App\Http\Controllers\ButtonController;
@@ -162,7 +163,7 @@ use App\Http\Controllers\SearchController;
 Route::get('/search/list/{id}', [SearchController::class, 'searchselect'])->name('search.list');
 Route::post('/search/list/{id}', [SearchController::class, 'searchselect'])->name('search.list.get');
 Route::get('/search/list/{date}/{time}', [SearchController::class, 'searchinsert'])->name('search.insert');
-Route::get('/search/list', [SearchController::class, 'searchdelete'])->name('search.delete');
+Route::delete('/search/list/{date}/{time}', [SearchController::class, 'searchdelete'])->name('search.delete');
 Route::post('/search/{f_id}/{c_id}', [SearchController::class, 'fooddelete'])->name('food.delete');
 Route::post('/search/{d_id}/{c_id}', [SearchController::class, 'dietdelete'])->name('diet.delete');
 
@@ -209,8 +210,8 @@ Route::post('/setdiet', [RecommendController::class, 'setdiet'])->name('recom.se
 // 생성일       : 2023-07-18
 // ---------------------------------------------
 use App\Http\Controllers\SocialController;
-Route::get('/kakao', [SocialController::class, 'redirect'])->name('kakao.redirect');
-Route::get('/kakao/back', [SocialController::class, 'back']);
+Route::get('social/{social}', [SocialController::class, 'redirect'])->name('social.redirect');
+Route::get('social/{social}/back', [SocialController::class, 'back']);
 
 // ---------------------------------------------
 // 섹션명       : 비밀번호 찾기

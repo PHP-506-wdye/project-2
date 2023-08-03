@@ -42,7 +42,7 @@
     <div id="myDiet">
         <div class="diet1">
             <div class="box1 mt-4">
-                <canvas id="doughnut-chart" width="60%" height="40"></canvas>
+                <canvas id="doughnut-chart" style="max-width: 400px; margin:0 auto;"></canvas>
             </div>
             {{-- 먹은거 없을 때 오류 방지 --}}
             <div class="box2">
@@ -51,8 +51,8 @@
                         @if($data['userKcal']->goal_kcal === 0)
                             <p class="text-center pt-md-4 pt-xl-5 pb-md-2 pb-xl-4 fw-bold">목표칼로리를 설정해주세요</p>
                         @else
-                            <h5 class="text-center pt-md-4 pt-xl-5 pb-md-2 pb-xl-4 fw-bold">영양비율</h5>
-                            <p class="ps-md-3 ps-xl-4 ps-xxl-5">
+                            <h5 class="text-center pt-md-4 pt-xl-5 pb-md-2 pb-xl-4 fw-bold mt-3">영양비율</h5>
+                            <p class="ps-md-3 ps-xl-4 ps-xxl-5 mt-4">
                                 <span class="fc-green">●</span>
                                 칼로리 0 %
                             </p>
@@ -101,7 +101,7 @@
         </div>
         <div class="diet2 container text-center">
             <h3 class="fw-bold mt-xl-4">{{Auth::user()->user_name}}님의 식단</h3>
-            <div class="box3 row row-cols-1 row-cols-md-3">
+            <div class="box3 row row-cols-1 row-cols-xl-3">
                 {{-- 일반식 또는 비건식 : 플래그 0번 또는 3번 --}}
                 @if((($data['userKcal']->nutrition_ratio)=='0') || (($data['userKcal']->nutrition_ratio)=='3'))
                     <div class="col">

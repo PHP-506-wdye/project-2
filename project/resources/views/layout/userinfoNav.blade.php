@@ -18,8 +18,8 @@
                     @if(isset($medal))
                         <a href="{{route('quest.questAchieve')}}" id="medal">{{ $medal }} <p id="medalChange"></p></a>
                     @endif
-                    <h2 class="h5 mb-1">{{Auth::user()->user_name}}</h2>
-                    <p class="mb-3 pb-3">{{Auth::user()->user_email}}</p>
+                    {{-- <h2 class="h5 mb-1">{{Auth::user()->user_name}}</h2>
+                    <p class="mb-3 pb-3">{{Auth::user()->user_email}}</p> --}}
                     <button type="button" class="btn w-100 d-md-none mt-n2 mb-3 collapsed" data-bs-toggle="collapse" data-bs-target="#account-menu" aria-expanded="false">
                     <i class="bx bxs-user-detail fs-xl me-2"></i>
                     My Page
@@ -38,9 +38,9 @@
                         <i class="bx bx-bowl-rice fs-xl opacity-60 me-2"></i>
                         식단설정
                     </a>
-                    <a href="{{route('user.board')}}" class="list-group-item list-group-item-action d-flex align-items-center">
+                    <a href="{{route('user.board')}}" class="list-group-item list-group-item-action d-flex align-items-center" id="myboard">
                         <i class="bx bx-clipboard fs-xl opacity-60 me-2"></i>
-                        글 & 댓글 목록
+                        내가 남긴 글 & 댓글
                     </a>
                     <a href="{{route('user.userwithdraw')}}" class="list-group-item list-group-item-action d-flex align-items-center">
                         <i class="bx bx-user-minus fs-xl opacity-60 me-2"></i>

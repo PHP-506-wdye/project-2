@@ -45,8 +45,14 @@
         <a href="{{route('user.emailverifypage')}}">회원가입</a>
     </div>
     <div class="social">
-        <a href="{{route('kakao.redirect')}}">
-            <img id="kakao" src="{{ asset('img/kakao.png') }}">
+        <a href="{{route('social.redirect', ['social' => 'kakao'])}}">
+            <img id="kakao" src="{{ asset('img/kakao.png') }}" class="socialIcon">
+        </a>
+        <a href="{{route('social.redirect', ['social' => 'naver'])}}">
+            <img id="naver" src="{{ asset('img/naver.png') }}" class="socialIcon">
+        </a>
+        <a href="{{route('social.redirect', ['social' => 'google'])}}">
+            <img id="google" src="{{ asset('img/google.png') }}" class="socialIcon">
         </a>
     </div>
 @endsection

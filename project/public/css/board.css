@@ -65,6 +65,10 @@ button:hover {
     background-color: #538E04;
 }
 
+.dietshare {
+    margin-top:0.5rem;
+}
+
 #deleteBtn {
     font-size: 10px;
     width: 20px;
@@ -109,7 +113,7 @@ button:hover {
 
 .boardDetailTitle {
     display: grid;
-    grid-template-columns: 2fr 0.5fr 1.8fr 1.2fr 0.6fr 0.5fr;
+    grid-template-columns: 2.2fr 0.5fr 1.8fr 1fr 0.4fr 0.4fr;
     justify-content: space-around;
     font-weight: 600;
     padding-bottom: 40px;

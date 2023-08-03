@@ -42,6 +42,7 @@
                             </div>
                         </div>
                     </div>
+                    {{-- <button type="button" id="deleteBtn" onclick="reReplyFormInsert(event)">ㄴ</button> --}}
                     {{-- v002 --}}
                     {{-- 댓글 삭제버튼 --}}
                     <span>

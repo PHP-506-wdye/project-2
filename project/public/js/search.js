@@ -1,16 +1,3 @@
-// todo 취소나 저장하지 않고 나갔을 때 처리
-// window.onbeforeunload = function() {
-//     return "저장되지 않은 변경사항이 있습니다. 정말 페이지를 떠나실 건 가요?";
-// };
-
-// $(document).on("submit", "form", function(){
-//     window.onbeforeunload = null;
-// });
-
-// $(document).on("click", function(){
-//     window.onbeforeunload = null;
-// });
-
 
 // 메뉴 탭
 const tab1 = document.querySelector('.tab1')
@@ -39,6 +26,8 @@ function getFoodValue(event, userId)  {
     let foodId = '';
     let foodAmout = '';
     let food = event.target;
+    let flg = document.getElementById('timeFlg').value;
+    let date = document.getElementById('date').value;
     
     if(event.target.checked)  {
         foodId = event.target.value;
@@ -63,7 +52,9 @@ function getFoodValue(event, userId)  {
         body: JSON.stringify({
             value1: userId,
             value2: foodId,
-            value3: foodAmout
+            value3: foodAmout,
+            value4: flg,
+            value5: date
         })
     });
     
@@ -81,7 +72,7 @@ function getFoodValue(event, userId)  {
             ffood.innerHTML = data['data'].food_name;
             intake.innerHTML = data['data'].amount + ' 인분';
             
-            // 삭제 버튼
+            // 삭제 버튼 생성
             let delfbtn = document.createElement('button')
             delfbtn.innerHTML = 'X';
             delfbtn.setAttribute('type', 'button')
@@ -92,7 +83,14 @@ function getFoodValue(event, userId)  {
             fav_food.appendChild(div);
             div.appendChild(ffood);
             div.appendChild(intake);
-            div.appendChild(delfbtn)
+            div.appendChild(delfbtn);
+
+            // 알러트
+            alert('선택된 음식 탭에 추가되었습니다.');
+
+            // 선택된 음식 효과
+            let selectedFood = document.getElementById('selectedFood');
+            selectedFood.innerHTML = 'new';
         } else {
             event.target.checked = false;
             alert(data['msg']);
@@ -129,6 +127,9 @@ function getFoodValue(event, userId)  {
 
 // 선택 음식 삭제 함수
 function deletefood(userId, foodId, cartId) {
+    let flg = document.getElementById('timeFlg').value;
+    let date = document.getElementById('date').value;
+
     const url = "/api/carts/foods";
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const request = new Request(url, {
@@ -141,40 +142,53 @@ function deletefood(userId, foodId, cartId) {
         method: 'DELETE',
         credentials: "same-origin",
         body: JSON.stringify({
-            user_id: userId,
-            cart_id: cartId,
-            food_id: foodId
+            userId: userId,
+            cartId: cartId,
+            foodId: foodId,
+            flg: flg,
+            date: date
         })
     });
+
     fetch(request)
     .then(res => res.json())
     .then( data => {
-        fav_food.replaceChildren()
-        data.forEach(ele => {
-            let ffood = document.createElement('span');
-            let intake = document.createElement('span');
-            let div = document.createElement('div');
-            ffood.innerHTML = ele.food_name;
-            intake.innerHTML = ele.amount + ' 인분';
-            
-            // 삭제 버튼
-            let delfbtn = document.createElement('button')
-            delfbtn.innerHTML = 'X';
-            delfbtn.setAttribute('type', 'button')
-            delfbtn.setAttribute('id', 'delete_btn')
-            delfbtn.setAttribute('onclick', "deletefood(" + ele.user_id + ',' + ele.food_id + ',' + ele.cart_id + ")")
-    
-            // 삭제 버튼 div에 넣기
-            fav_food.appendChild(div);
-            div.appendChild(ffood);
-            div.appendChild(intake);
-            div.appendChild(delfbtn)
-        })
+        if(data['errorcode'] === '0') {
+            fav_food.replaceChildren()
+            if(data['data'].length < 1 && fav_diet.children.length < 1) {
+                let selectedFood = document.getElementById('selectedFood');
+                selectedFood.innerHTML = '';
+                return false;
+            }
+            data['data'].forEach(ele => {
+                let ffood = document.createElement('span');
+                let intake = document.createElement('span');
+                let div = document.createElement('div');
+                ffood.innerHTML = ele.food_name;
+                intake.innerHTML = ele.amount + ' 인분';
+                
+                // 삭제 버튼
+                let delfbtn = document.createElement('button')
+                delfbtn.innerHTML = 'X';
+                delfbtn.setAttribute('type', 'button')
+                delfbtn.setAttribute('id', 'delete_btn')
+                delfbtn.setAttribute('onclick', "deletefood(" + ele.user_id + ',' + ele.food_id + ',' + ele.cart_id + ")")
+        
+                // 삭제 버튼 div에 넣기
+                fav_food.appendChild(div);
+                div.appendChild(ffood);
+                div.appendChild(intake);
+                div.appendChild(delfbtn)
+            })
+        }
     })
 }
 
 // 즐겨찾는 식단 -> 장바구니
 function getDietValue(event, userId, favId)  {
+    let flg = document.getElementById('timeFlg').value;
+    let date = document.getElementById('date').value;
+
     const url = "/api/carts/diets";
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const request = new Request(url, {
@@ -187,8 +201,10 @@ function getDietValue(event, userId, favId)  {
         method: 'POST',
         credentials: "same-origin",
         body: JSON.stringify({
-            user_id: userId,
-            fav_id: favId
+            userId: userId,
+            favId: favId,
+            flg: flg,
+            date: date
         })
     });
     fetch(request)
@@ -217,7 +233,14 @@ function getDietValue(event, userId, favId)  {
                 // 저장된 식단 부분
                 let favDiv = document.getElementById('favId-' + favId);
                 favDiv.style.display = "none";
-            } else if (data['errorcode'] === '1') {
+
+                // 알러트
+                alert('선택된 음식 탭에 추가되었습니다.');
+
+                // 선택된 음식
+                let selectedFood = document.getElementById('selectedFood');
+                selectedFood.innerHTML = 'new';
+            } else {
                 alert(data['msg']);
                 event.target.checked = false;
             }
@@ -226,6 +249,9 @@ function getDietValue(event, userId, favId)  {
 
 // 선택 식단 삭제 함수
 function deletediet(userId, cartId, favId) {
+    let flg = document.getElementById('timeFlg').value;
+    let date = document.getElementById('date').value;
+
     const url = "/api/carts/diets";
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const request = new Request(url, {
@@ -238,16 +264,17 @@ function deletediet(userId, cartId, favId) {
         method: 'DELETE',
         credentials: "same-origin",
         body: JSON.stringify({
-            user_id: userId,
-            cart_id: cartId
+            userId: userId,
+            cartId: cartId,
+            flg: flg,
+            date: date
         })
     });
     fetch(request)
     .then(res => res.json())
     .then( data => {
-        console.log(data);
+        fav_diet.replaceChildren()
         if (data['errorcode'] === '0') {
-            fav_diet.replaceChildren()
             data['data'].forEach(ele => {
                 let ffood = document.createElement('span')
                 let brp = document.createElement('br')
@@ -264,8 +291,9 @@ function deletediet(userId, cartId, favId) {
                 fav_diet.appendChild(deldbtn)
                 fav_diet.appendChild(brp);
             })
-        } else if(data['errorcode'] === '1') {
-            fav_diet.replaceChildren()
+        } else if(data['errorcode'] === '1' && fav_food.children.length - 2 < 1) {
+            let selectedFood = document.getElementById('selectedFood');
+            selectedFood.innerHTML = '';
         }
         let displayDiv = document.getElementById('favId-' + favId)
         let displayInput = document.getElementById('input-' + favId);

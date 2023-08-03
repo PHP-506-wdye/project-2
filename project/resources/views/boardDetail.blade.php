@@ -29,7 +29,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">댓글 신고</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">게시글 신고</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -44,6 +44,7 @@
                                     <option value="1">비방 및 욕설</option>
                                     <option value="2">허위 사실 유포</option></option>
                                     <option value="3">지속적인 도배</option>
+                                    <option value="4">기타</option>
                                 </select>
                                 <textarea name="reporttext" id="reportreason" cols="30" rows="10"></textarea>
                                 <div class="modal-footer">
@@ -73,7 +74,7 @@
                             <br>
                         @endforeach
                         @if ($data['fav_id'] != 0)
-                            <button type="button" class="shereBtn" data-bs-toggle="modal" data-bs-target="#exampleModal0">식단 내려받기</button>
+                            <button type="button" class="shereBtn" id="greenBtn" data-bs-toggle="modal" data-bs-target="#exampleModal0">식단 내려받기</button>
                             {{-- 식단 명 입력 모달 --}}
                             <div class="modal fade" id="exampleModal0" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -88,7 +89,7 @@
                                             <form action="{{route('board.dietdownload', ['favid' => $data['fav_id']])}}" method="post">
                                                 @csrf
                                                 <input type="text" name="fav_name" required placeholder="식단명을 입력해주세요." autocomplete="off" maxlength="10">
-                                                <button type="submit" class="greenBtn">등록하기</button>
+                                                <button type="submit" id="greenBtn" class="dietshare">등록하기</button>
                                             </form>
                                         </div>
                                     </div>

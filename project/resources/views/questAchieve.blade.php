@@ -42,7 +42,7 @@
                                 {{$item->quest_content}}
                             </p>
                             <p>
-                                달성일 {{$item->updated_at}}
+                                달성일 {{mb_substr($item->updated_at, 0, 10)}}
                             </p>
                         </div>
                     </div>

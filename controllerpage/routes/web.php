@@ -41,6 +41,9 @@ Route::delete('/comment/massDelete', [WriteController::class, 'massDelete'])->na
 Route::get('/board/boardlist', [WriteController::class, 'boardlist'])->name('board.boardlist');
 //게시글 삭제 라우트
 Route::delete('/board/boarddel/{id}',[WriteController::class, 'boarddel'])->name('board.boarddel');
+//게시글 선택 삭제 라우트
+Route::delete('/comment/bordmassDelete', [WriteController::class, 'bordmassDelete'])->name('comment.bordmassDelete');
+
 
 // ---------------------------------------------
 // 섹션명       : 회원관리
@@ -92,5 +95,11 @@ use App\Http\Controllers\FoodController;
 Route::get('/user/food', [FoodController::class, 'userfood'])->name('user.food');
 Route::get('/manager/food', [FoodController::class, 'managerfood'])->name('manager.food');
 Route::post('/food/insert', [FoodController::class, 'foodinsert'])->name('food.insert');
+
+Route::get('/manager/search', [FoodController::class, 'managerfoodSearch'])->name('manager.search');
+Route::get('/food/search', [FoodController::class, 'foodSearch'])->name('food.search');
+
+
+
 
 
