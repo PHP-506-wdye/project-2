@@ -9,8 +9,8 @@
    - 커뮤니티를 통한 식단 공유 및 식단 개선
    - 퀘스트를 통한 건강 생활 습관 형성
    - 등록 음식, 유저, 게시글, 댓글, 신고 내역 관리가 가능한 관리자 페이지 제작
-   - [3차 프로젝트 소개 PPT 링크](https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
-   - <a href="https://www.canva.com/design/DAFpsa7Ik74/uvPBSVzRxFnXlZCqQMXIvw/edit?utm_content=DAFpsa7Ik74&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">2차 프로젝트 소개 PPT 링크</a>
+   - [2차 프로젝트 소개 PPT 링크](https://www.canva.com/design/DAFpma63MDA/jFHxAMayXLwd1fSh8gIA1A/view?utm_content=DAFpma63MDA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+   - <a href="https://www.canva.com/design/DAFpsa7Ik74/uvPBSVzRxFnXlZCqQMXIvw/edit?utm_content=DAFpsa7Ik74&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">1차 프로젝트 소개 PPT 링크</a>
 
 ## 진행 기간
    - 1차 : 2023.06.09 ~ 2023.06.28
