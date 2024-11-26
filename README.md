@@ -17,7 +17,7 @@
    - 2차 : 2023.07.14 ~ 2023.07.26
 
 ## 주요 참고 자료
-   - 식품의약품안전처_식품 영양성분 정보(공공데이터 포털: https://www.data.go.kr/data/15057436/openapi.do?recommendDataYn=Y)
+   - 식품의약품안전처_식품 영양성분 정보(공공데이터 포털: https://www.data.go.kr/data/15047698/fileData.do)
    - 대한당요병학회(https://www.diabetes.or.kr/general/dietary/dietary_02.php?con=2)
    - 미플린 세인트 지어 방정식 참고자료(https://en.wikipedia.org/wiki/Basal_metabolic_rate)
 
