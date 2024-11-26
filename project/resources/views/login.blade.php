@@ -46,13 +46,13 @@
     </div>
     <div class="social">
         <a href="{{route('social.redirect', ['social' => 'kakao'])}}">
-            <img id="kakao" src="{{ asset('img/kakao.png') }}" class="socialIcon">
+            <img id="kakao_img" src="{{ asset('img/kakao.png') }}" class="socialIcon">
         </a>
-        <a href="{{route('social.redirect', ['social' => 'naver'])}}">
-            <img id="naver" src="{{ asset('img/naver.png') }}" class="socialIcon">
+        <a href="{{route('social.redirect', ['social' => 'naver'ß])}}">
+            <img id="naver_img" src="{{ asset('img/naver.png') }}" class="socialIcon">
         </a>
         <a href="{{route('social.redirect', ['social' => 'google'])}}">
-            <img id="google" src="{{ asset('img/google.png') }}" class="socialIcon">
+            <img id="google_img" src="{{ asset('img/google.png') }}" class="socialIcon">
         </a>
     </div>
 @endsection
